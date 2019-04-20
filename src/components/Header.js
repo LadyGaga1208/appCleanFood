@@ -1,22 +1,33 @@
-import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
-import { Header } from 'react-navigation';
-import * as variables from '../config/variables';
+import React, { Component } from "react";
+import { Text, View, TouchableOpacity, Image } from "react-native";
+import { Header } from "react-native-elements";
+import * as variables from "../config/variables";
 
-export default class MyHeader extends Component {
-    render() {
-        return (
-            <View
-                style={{
-                    height: Header.HEIGHT,
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    backgroundColor: variables.mainColor
-                }}
-            >
-                {this.props.children}
-            </View>
-        );
-    }
+import * as images from "../assets/images";
+
+export default class TMHeader extends Component {
+  render() {
+    return (
+      <Header
+        centerComponent={{ text: this.props.title, style: { color: "#fff" } }}
+        leftComponent={this.renderLeftComponent()}
+        containerStyle={{
+          backgroundColor: variables.mainColor
+        }}
+        statusBarProps={{
+          translucent: true
+        }}
+      />
+    );
+  }
+
+  renderLeftComponent = () => {
+    return (
+      <TouchableOpacity>
+        <View>
+          <Image source={images.back} style={{ tintColor: "#ffffff" }} />
+        </View>
+      </TouchableOpacity>
+    );
+  };
 }
