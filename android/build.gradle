@@ -29,6 +29,17 @@ allprojects {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
             url "$rootDir/../node_modules/react-native/android"
         }
+        configurations.all {
+            resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+                def requested = details.requested
+                if (requested.group == 'com.google.android.gms') {
+                    details.useVersion rootProject.ext.googlePlayServicesVersion
+                }
+                if (requested.group == 'com.google.firebase') {
+                    details.useVersion rootProject.ext.googlePlayServicesVersion
+                }
+            }
+        }
     }
 }
 

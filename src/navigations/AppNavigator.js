@@ -24,7 +24,7 @@ function initStackNavigator(initialRouteName) {
 
 const AppTab = createBottomTabNavigator(
   {
-    Home: { screen: initStackNavigator('ProductDetail') },
+    Home: { screen: initStackNavigator('Home') },
     Catalogues: { screen: initStackNavigator('Catalogues') },
     Carts: { screen: initStackNavigator('Carts') },
     Profile: { screen: initStackNavigator('Profile') }
