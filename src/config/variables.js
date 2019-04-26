@@ -14,5 +14,6 @@ export const FONTSIZE = {
 
 export const COLOR = {
     white: '#ffffff',
-    black: 'black'
+    black: 'black',
+    orange: "#f75510"
 };

@@ -14,6 +14,7 @@ export default class Home extends PureComponent {
   };
   renderCenterComponent = () => (
     <Button
+      onPress={this.navigationSearch}
       title="Tìm kiếm..."
       buttonStyle={{
         width: 0.9 * variables.width,
@@ -103,5 +104,9 @@ export default class Home extends PureComponent {
         </ScrollView>
       </View>
     );
+  }
+  navigationSearch = () => {
+    console.log("object")
+    this.props.navigation.navigate("Search");
   }
 }

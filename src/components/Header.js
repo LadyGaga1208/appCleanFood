@@ -7,7 +7,7 @@ import * as images from '../assets/images';
 
 export default class TMHeader extends Component {
   renderLeftComponent = () => (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={this.props.onPress}>
       <View>
         <Image source={images.back} style={{ tintColor: '#ffffff', width: 24, height: 24 }} />
       </View>
