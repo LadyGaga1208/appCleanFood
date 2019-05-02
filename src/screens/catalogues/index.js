@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
-import Geolocation from 'react-native-geolocation-service';
 
 import { Text, View, Dimensions, Image, StyleSheet, PermissionsAndroid, Platform } from 'react-native';
 import { Header, Icon } from 'react-native-elements';
@@ -44,51 +43,46 @@ export default class Catalogues extends Component {
     //   },
     //   { enableHighAccuracy: true, timeout: 200000, maximumAge: 1000 },
     // );
-    this.getCurrentLocation();
+    // this.getCurrentLocation();
   }
-
 
   getCurrentLocation = async () => {
     if (Platform.OS === 'android') {
-      console.log(' ......................................');
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-        {
-          title: 'Cool Photo App Camera Permission',
-          message:
-            'Cool Photo App needs access to your camera ' +
-            'so you can take awesome pictures.',
-          buttonNeutral: 'Ask Me Later',
-          buttonNegative: 'Cancel',
-          buttonPositive: 'OK',
-        },
-      );
-      console.log(granted, 'granted.............');
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log('hehehehehehehe=======');
-        // eslint-disable-next-line no-undef
-        // navigator.geolocation.getCurrentPosition(
-        //   (position, error) => {
-        //     console.log(error, "hahaha");
-        //     console.log(position);
-        //     this.setState({
-        //       latitude: position.coords.latitude,
-        //       longitude: position.coords.longitude,
-        //     });
-        //   },
-        //   { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000 })  
-        Geolocation.getCurrentPosition(
-          (position) => {
-            console.log(position);
-            this.setState({
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude,
-            });
+      try {
+        console.log(' ......................................');
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          {
+            title: 'Cool Photo App Camera Permission',
+            message:
+              'Cool Photo App needs access to your camera ' +
+              'so you can take awesome pictures.',
+            buttonNeutral: 'Ask Me Later',
+            buttonNegative: 'Cancel',
+            buttonPositive: 'OK',
           },
-          // { enableHighAccuracy: true, timeout: 15000, maximumAge: 3600 }
         );
-      } else {
-        console.log('Camera permission denied');
+        console.log(granted, 'granted.............');
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          console.log('hehehehehehehe=======');
+          // eslint-disable-next-line no-undef
+          navigator.geolocation.getCurrentPosition(
+            (position, error) => {
+              console.log(error);
+              console.log(position, 'Vị trí lấy được');
+              this.setState({
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
+              });
+            },
+            // { enableHighAccuracy: true, timeout: 200000, maximumAge: 3600000 },
+          );
+        } else {
+          console.log('Camera permission denied');
+        }
+      } catch (err) {
+        console.log('hahahaha//////////////////');
+        console.warn(err);
       }
     }
     navigator.geolocation.getCurrentPosition(
@@ -105,11 +99,10 @@ export default class Catalogues extends Component {
   }
 
   render() {
-    console.log(this.state.latitude, "hehehe")
     return (
       <View style={styles.container}>
         <MapView
-          provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+          // provider={PROVIDER_GOOGLE} // remove if not using Google Maps
           style={styles.map}
           initialRegion={{
             latitude: LATITUDE,
@@ -117,26 +110,16 @@ export default class Catalogues extends Component {
             latitudeDelta: LATITUDE_DELTA,
             longitudeDelta: LONGITUDE_DELTA,
           }}
-          region={
-
-            {
-              latitudeDelta: LATITUDE_DELTA,
-              longitudeDelta: LONGITUDE_DELTA,
-              latitude: this.state.latitude,
-              longitude: this.state.longitude
-            }
-
-          }
         >
-          <Marker
+          {/* <Marker
             ref={marker => { this.marker = marker; }}
             coordinate={{
               latitude: this.state.latitude,
               longitude: this.state.longitude
             }}
-          />
+          /> */}
         </MapView>
-      </View >
+      </View>
     );
   }
 }

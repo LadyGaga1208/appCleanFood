@@ -13,6 +13,13 @@ import SignUp from '../screens/signUp';
 import ForgotPass from '../screens/forgotPass';
 import { screen } from './Screen';
 
+import Home from '../screens/home';
+import Catalogues from '../screens/catalogues';
+import Carts from '../screens/cart';
+import Profile from '../screens/profile';
+import ProductDetail from '../screens/product';
+import Search from '../screens/search';
+
 function initStackNavigator(initialRouteName) {
   return createStackNavigator(
     { ...screen },
@@ -22,12 +29,23 @@ function initStackNavigator(initialRouteName) {
   );
 }
 
+const StackHome = createStackNavigator({
+  Home,
+  ProductDetail,
+  Search
+});
+
+const StackCart = createStackNavigator({
+  Carts,
+  ProductDetail
+});
+
 const AppTab = createBottomTabNavigator(
   {
-    Home: { screen: initStackNavigator('Home') },
-    Catalogues: { screen: initStackNavigator('Catalogues') },
-    Carts: { screen: initStackNavigator('Carts') },
-    Profile: { screen: initStackNavigator('Profile') }
+    Home: StackHome,
+    Catalogues,
+    Carts: { screen: StackCart },
+    Profile: { screen: Profile }
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({

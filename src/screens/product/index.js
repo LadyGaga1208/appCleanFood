@@ -1,13 +1,29 @@
 import React, { Component } from 'react';
-import { Text, View, Image, ScrollView } from 'react-native';
+import { Text, View, Image, ScrollView, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import { Rating, Button } from 'react-native-elements';
+import Modal from 'react-native-modal';
+
 import TMHeader from '../../components/Header';
 import * as variables from '../../config/variables';
+import * as imgs from '../../assets/images';
 
 export default class ProductDetail extends Component {
   static navigationOptions = {
     header: null
   };
+
+  state = {
+    isModalVisible: null,
+  };
+
+  _toggleModalStore = () => {
+    console.log('hehe');
+    this.setState({ isModalVisible: 1 });
+  }
+  _toggleModalCart = () => {
+    console.log('hehe');
+    this.setState({ isModalVisible: 2 });
+  }
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -16,14 +32,15 @@ export default class ProductDetail extends Component {
           <View style={{ flexDirection: 'row' }}>
             <Image
               source={{ uri: 'https://i.pinimg.com/564x/a7/ca/5c/a7ca5c0c50f610582bfda19d21086018.jpg' }}
-              style={{
-                width: '47%',
-                height: 0.24 * variables.height,
-              }}
+              style={styles.imgProduct}
             />
             <View style={{ marginLeft: 10 }}>
               <Text style={{ fontSize: variables.FONTSIZE.large, color: variables.COLOR.black, fontWeight: '500' }}>Maykyo hokk</Text>
               <Text style={{ color: variables.mainColor, fontSize: variables.FONTSIZE.large, fontWeight: '500' }}>50.000d/kg</Text>
+              <View style={{ flexDirection: 'row', marginTop: 5 }}>
+                <Image source={imgs.store} style={{ width: 20, height: 20 }} />
+                <Text style={{ fontSize: 14, color: variables.COLOR.orange, marginLeft: 5 }}>TOMITA Trần Duy Hưng</Text>
+              </View>
               <View style={{ flexDirection: 'row', marginTop: 5 }}>
                 <Rating
                   type="star"
@@ -41,9 +58,10 @@ export default class ProductDetail extends Component {
                 buttonStyle={{
                   width: '85%',
                   backgroundColor: variables.mainColor,
-                  marginTop: 35
+                  marginTop: 15
                 }}
                 title="Thêm vào giỏ"
+                onPress={() => this._toggleModalStore()}
               />
             </View>
           </View>
@@ -76,7 +94,74 @@ export default class ProductDetail extends Component {
 子連れ母親ファミレスで激怒「先にドリンクバーだけ頂戴」</Text>
           </View>
         </ScrollView>
+        <Modal isVisible={this.state.isModalVisible === 1} style={{ margin: 0, justifyContent: 'flex-end' }}>
+          <View style={{ backgroundColor: variables.COLOR.white, height: '60%', padding: 10 }}>
+            <Text style={{ color: 'black', fontSize: 18 }}>Chọn cửa hàng của TOMITA!</Text>
+            <TouchableOpacity
+              style={{ backgroundColor: variables.backgroundColor, padding: 5, marginTop: 10, borderRadius: 10 }}
+              onPress={this._toggleModalCart}
+            >
+              <View style={{ flexDirection: 'row' }}>
+                <Image source={imgs.place} style={{ width: 20, height: 20, tintColor: variables.COLOR.fb }} />
+                <Text style={{ marginLeft: 5 }}>125 Trần Duy Hưng, Cầu giấy, Hà nội</Text>
+              </View>
+              <Text style={{ marginTop: 5, marginLeft: 10 }}>Số lương: 45 kg</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.setState({ isModalVisible: 0 })}
+              style={{
+                backgroundColor: variables.mainColor,
+                width: 40,
+                height: 40,
+                elevation: 2,
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 20,
+                position: 'absolute',
+                bottom: 20,
+                right: 20
+              }}
+            >
+              <Image source={imgs.cancel} style={{ width: 18, height: 18, tintColor: '#fff' }} />
+            </TouchableOpacity>
+          </View>
+        </Modal>
+        <Modal isVisible={this.state.isModalVisible === 2} style={{ margin: 0, justifyContent: 'center', alignItems: 'center' }}>
+          <View style={{ width: 250, height: 150, backgroundColor: '#fff', padding: 10, borderRadius: 10 }}>
+            <Text style={{ color: '#444', fontSize: 16 }}>Số lượng: 24 kg</Text>
+            <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'center', marginTop: 10 }}>
+              <TouchableOpacity style={{ width: 40, height: 40, justifyContent: 'center', alignItems: 'center' }}>
+                <Image source={imgs.plus} style={{ width: 24, height: 24, tintColor: variables.mainColor }} />
+              </TouchableOpacity>
+              <TextInput style={{ borderWidth: 0.5, padding: 0, borderColor: 'gray', width: 70, marginHorizontal: 10 }} />
+              <TouchableOpacity style={{ width: 40, height: 40, justifyContent: 'center', alignItems: 'center' }}>
+                <Image source={imgs.minus} style={{ width: 24, height: 24, tintColor: variables.mainColor }} />
+              </TouchableOpacity>
+
+            </View>
+
+            <Button
+              buttonStyle={{
+                width: '70%',
+                backgroundColor: variables.mainColor,
+                marginTop: 15,
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginLeft: '15%'
+              }}
+              title="Thêm vào giỏ"
+              onPress={() => this._toggleModalStore()}
+            />
+          </View>
+        </Modal>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  imgProduct: {
+    width: 140,
+    height: 180,
+  }
+});

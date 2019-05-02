@@ -21,7 +21,7 @@ export default class ItemNewProduct extends PureComponent {
                     </View>
                     <View style={{ paddingHorizontal: 5, marginTop: 5 }}>
                         <Text style={{ color: variables.COLOR.black }}>Cam Mỹ</Text>
-                        <Text style={{ fontSize: 14, color: variables.COLOR.orange }}>Tomita</Text>
+                        <Text style={{ fontSize: 12, color: variables.COLOR.orange }}>Tomita Cầu Giấy</Text>
                         <Text style={{ fontSize: 12, fontWeight: '500', color: variables.COLOR.black }}>20.000đ/kg</Text>
                     </View>
                 </TouchableOpacity>
