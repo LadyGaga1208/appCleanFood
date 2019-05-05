@@ -7,7 +7,7 @@ export default class SearchStore extends Component {
         return (
             <View>
                 <Text>6 kết quả được tìm thấy</Text>
-                <ItemSearchStore />
+                <ItemSearchStore onPress={this.props.onPress} />
             </View>
         );
     }

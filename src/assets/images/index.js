@@ -10,3 +10,7 @@ export const cancel = require('./delete.png');
 export const plus = require('./plus.png');
 export const minus = require('./minus.png');
 export const icDelete = require('./ic_delete.png');
+export const phone = require("./call.png");
+export const email = require("./email.png");
+export const face = require("./face.png");
+export const time = require("./clock.png")

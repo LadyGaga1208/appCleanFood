@@ -6,7 +6,7 @@ import * as imgs from '../../assets/images';
 export default class ItemSearchStore extends Component {
     render() {
         return (
-            <TouchableOpacity style={styles.container}>
+            <TouchableOpacity style={styles.container} onPress={this.props.onPress}>
                 <Image source={{ uri: 'https://i.pinimg.com/564x/53/cf/02/53cf0241201924cfdcaee88f23dba9b1.jpg' }} style={{ width: 80, height: 80, }} />
                 <View style={{ marginLeft: 10 }}>
                     <Text style={{ color: variables.COLOR.orange, fontSize: 18 }}>Bác Tôm Trần Duy Hưng</Text>

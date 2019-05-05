@@ -61,7 +61,7 @@ export default class Search extends Component {
                             <ItemProduct />
                         </View>
                         <View tabLabel="Cửa hàng" style={styles.container}>
-                            <SearchStore />
+                            <SearchStore onPress={() => this.props.navigation.navigate("StoreDetail")} />
                         </View>
                     </ScrollableTabView>
                 </View>

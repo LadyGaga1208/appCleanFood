@@ -19,6 +19,7 @@ import Carts from '../screens/cart';
 import Profile from '../screens/profile';
 import ProductDetail from '../screens/product';
 import Search from '../screens/search';
+import StoreDetail from '../screens/storeDetail'
 
 function initStackNavigator(initialRouteName) {
   return createStackNavigator(
@@ -32,7 +33,8 @@ function initStackNavigator(initialRouteName) {
 const StackHome = createStackNavigator({
   Home,
   ProductDetail,
-  Search
+  Search,
+  StoreDetail
 });
 
 const StackCart = createStackNavigator({
