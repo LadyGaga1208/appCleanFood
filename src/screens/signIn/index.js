@@ -2,11 +2,18 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { Header, Input, Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
-
+import { userLogin } from '../../redux/actions/user'
 import * as variables from '../../config/variables';
+import { connect } from 'react-redux';
 
-export default class SignIn extends Component {
+class SignIn extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: "",
+            password: ""
+        }
+    }
     render() {
         return (
             <View style={{ flex: 1 }}>
@@ -34,6 +41,12 @@ export default class SignIn extends Component {
                         }}
                         label="Email"
                         placeholder="Email"
+                        value={this.state.email}
+                        onChangeText={(text) => {
+                            this.setState({
+                                email: text
+                            })
+                        }}
                     />
                     <Input
                         secureTextEntry
@@ -42,6 +55,13 @@ export default class SignIn extends Component {
                         containerStyle={{
                             marginTop: 10
                         }}
+                        onChangeText={
+                            (text) => {
+                                this.setState({
+                                    password: text
+                                })
+                            }
+                        }
                     />
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('ForgotPass')}>
                         <Text style={{ color: 'blue', marginTop: 10, marginLeft: 10 }}>Quên mật khẩu ?</Text>
@@ -53,6 +73,10 @@ export default class SignIn extends Component {
                             marginTop: 40,
                             marginHorizontal: 10
                         }}
+                        onPress={() => this.props.userLogin({
+                            email: this.state.email,
+                            password: this.state.password
+                        })}
                     />
                     <View style={{ flexDirection: 'row', marginHorizontal: 10, marginTop: 10, justifyContent: 'center', alignItems: 'center' }}>
                         <View style={{ backgroundColor: 'gray', height: 1, width: 50 }} />
@@ -90,3 +114,11 @@ export default class SignIn extends Component {
         );
     }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+    userLogin: (data) => {
+        dispatch(userLogin(data));
+    }
+});
+
+export default connect(null, mapDispatchToProps)(SignIn);

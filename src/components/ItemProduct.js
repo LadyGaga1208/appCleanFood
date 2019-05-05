@@ -25,7 +25,7 @@ export class ItemProduct extends Component {
           <Text style={{ fontSize: variables.FONTSIZE.medium, color: 'black' }}>
             Rau cai luoc
           </Text>
-          <Text style={{ color: variables.COLOR.orange, fontSize: 14 }}>Tomita Bách Khoa</Text>
+          <Text style={{ color: variables.COLOR.orange, fontSize: 14 }}>Tomita</Text>
           <Text style={{ color: variables.mainColor, fontWeight: '500' }}>
             40.000đ/kg
           </Text>
@@ -56,7 +56,6 @@ export class ItemProduct extends Component {
 const styles = StyleSheet.create({
   container: {
     width: '43%',
-    // height: 225,
     backgroundColor: variables.COLOR.white,
     borderRadius: 15,
     elevation: 3,

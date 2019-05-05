@@ -85,7 +85,7 @@ const AuthStack = createStackNavigator(
 );
 
 const AppNavigator = createSwitchNavigator({
-  App: AppTab,
+  // App: AppTab,
   Auth: AuthStack
 });
 
