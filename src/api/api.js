@@ -2,8 +2,8 @@
  * api domain constants
  */
 
-export const baseURL = 'http://hoangtung.site/api'
-export const TIMEOUT = 30000
+export const baseURL = 'http://hoangtung.site/api';
+export const TIMEOUT = 30000;
 
 /*
  * api path
@@ -11,5 +11,6 @@ export const TIMEOUT = 30000
 /*
  * get location
  */
-export const sigIn = '/user/login'
+export const sigIn = '/user/login';
+export const banner = 'api/home/banner';
 

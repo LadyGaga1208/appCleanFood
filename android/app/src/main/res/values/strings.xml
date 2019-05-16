@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CleanFood</string>
+    <string name="facebook_app_id">429297117630078</string> <string name="fb_login_protocol_scheme">fb429297117630078</string>
+
 </resources>

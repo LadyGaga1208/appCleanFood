@@ -1,6 +1,9 @@
-import { GetApi, PostApi } from './requestApi'
-import * as api from './api'
+import axios from 'axios';
+import * as Api from './api';
 
-export default {
-  signIn: (data) => PostApi(api.sigIn, data)
-}
+const axiosInstance = axios.create({
+  baseURL: Api.baseURL,
+  timeout: Api.TIMEOUT
+});
+
+export default axiosInstance;

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Dimensions, Image } from 'react-native';
 import Carousel from 'react-native-banner-carousel';
-
-import * as variables from '../../config/variables';
+import { connect } from 'react-redux';
+import { getDataBanner } from '../../redux/actions/home';
+import { Loading } from '../../components';
 
 const BannerWidth = Dimensions.get('window').width;
 const BannerHeight = 160;
@@ -14,7 +15,11 @@ const images = [
     'http://hstatic.net/808/1000144808/1000194018/slideshow_image_4.jpg?v=1487'
 ];
 
-export default class BannerSlide extends Component {
+class BannerSlide extends Component {
+    componentDidMount = () => {
+        this.props.getDataBanner();
+    }
+
     renderPage(image, index) {
         return (
             <View key={index}>
@@ -24,6 +29,7 @@ export default class BannerSlide extends Component {
     }
 
     render() {
+        console.log(this.props.data);
         return (
             <View style={styles.container}>
                 <Carousel
@@ -46,3 +52,17 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
 });
+
+const mapStateToProps = (state) => ({
+    data: state.bannerReducer.dataHome,
+    isLoading: state.bannerReducer.loading,
+    error: state.bannerReducer.error
+});
+
+const mapDispathToProps = (dispath) => ({
+    getDataBanner: () => {
+        dispath(getDataBanner());
+    }
+});
+
+export default connect(mapStateToProps, mapDispathToProps)(BannerSlide);

@@ -1,19 +1,122 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { Header, Input, Button } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { userLogin } from '../../redux/actions/user'
-import * as variables from '../../config/variables';
 import { connect } from 'react-redux';
+import AsyncStorage from '@react-native-community/async-storage';
+import { GraphRequest, GraphRequestManager, AccessToken, LoginManager } from 'react-native-fbsdk';
+
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { userLogin } from '../../redux/actions/user';
+import * as variables from '../../config/variables';
+import { Loading } from '../../components';
 
 class SignIn extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: "",
-            password: ""
+            email: '',
+            password: ''
+        };
+    }
+
+    componentWillReceiveProps = async (nextprops) => {
+        if (nextprops.user.validate_token) {
+            console.log('token', nextprops.user.validate_token);
+            this.signInAsync(nextprops.user.validate_token);
+        }
+        if (nextprops.error !== this.props.error) {
+            const e = this.getErrorLogin(nextprops.error);
+            Alert.alert(
+                'Lỗi',
+                `${e}`,
+                [
+                    { text: 'OK', onPress: () => console.log('OK Pressed') },
+                ],
+                { cancelable: false },
+            );
         }
     }
+
+    getErrorLogin = (error) => {
+        let stringError = '';
+        Object.keys(error).forEach((key) => {
+            console.log(key, error[key]);
+            stringError += error[key];
+        });
+        return stringError;
+    }
+    loginFB = () => {
+        LoginManager.logInWithReadPermissions(['public_profile', 'email']).then(
+            (result) => {
+                if (result.isCancelled) {
+                    console.log('Login cancelled');
+                } else {
+                    console.log(result, 'ket qua login facebook');
+                    console.log(
+                        `Login success with permissions: ${
+                        result.grantedPermissions.toString()}`
+                    );
+                    AccessToken.getCurrentAccessToken().then(
+                        (data) => {
+                            console.log(data, 'dfgsaoghsadhfgsao');
+                            console.log(data.accessToken.toString(), data.userID);
+                            this.initUser(data.accessToken.toString());
+                            // const responseCallback = ((error, result) => {
+                            //     const response = {
+                            //         ok: false,
+                            //         error: '',
+                            //         json: ''
+                            //     };
+                            //     if (error) {
+                            //         response.ok = false;
+                            //         response.error = error;
+                            //         console.log(response);
+                            //         return (response);
+                            //     }
+                            //     response.ok = true;
+                            //     response.json = result;
+                            //     console.log(response);
+                            //     return (response);
+                            // });
+                            // const infoRequest = new GraphRequest(
+                            //     '/me?fields=name,picture,email',
+                            //     null,
+                            //     responseCallback
+                            // );
+                            // // Start the graph request.
+                            // new GraphRequestManager().addRequest(infoRequest).start();
+                        }
+                    );
+                }
+            },
+            (error) => {
+                console.log(`Login fail with error: ${error}`);
+            });
+    }
+    initUser(token, id) {
+        fetch(`https://graph.facebook.com/v2.5/me?fields=email,name,friends&access_token=${token}`)
+            .then((response) => response.json())
+            .then((json) => {
+                console.log(json);
+                // Some user object has been set up somewhere, build that user here
+                // user.name = json.name;
+                // user.id = json.id;
+                // user.user_friends = json.friends;
+                // user.email = json.email;
+                // user.username = json.name;
+                // user.loading = false;
+                // user.loggedIn = true;
+                // user.avatar = setAvatar(json.id);
+            })
+            .catch(() => {
+                reject('ERROR GETTING DATA FROM FACEBOOK');
+            });
+    }
+
+    signInAsync = async (token) => {
+        await AsyncStorage.setItem('userToken', token);
+        this.props.navigation.navigate('App');
+    };
     render() {
         return (
             <View style={{ flex: 1 }}>
@@ -27,6 +130,7 @@ class SignIn extends Component {
                     }}
                 />
                 <ScrollView style={{ flex: 1, paddingHorizontal: variables.Pad }}>
+                    {this.props.loading ? <Loading /> : null}
                     <Text
                         style={{
                             textAlign: 'center',
@@ -45,7 +149,7 @@ class SignIn extends Component {
                         onChangeText={(text) => {
                             this.setState({
                                 email: text
-                            })
+                            });
                         }}
                     />
                     <Input
@@ -59,7 +163,7 @@ class SignIn extends Component {
                             (text) => {
                                 this.setState({
                                     password: text
-                                })
+                                });
                             }
                         }
                     />
@@ -98,6 +202,7 @@ class SignIn extends Component {
                                 name="facebook-f"
                             />
                         }
+                        onPress={() => this.loginFB()}
                     />
                     <Text style={{ color: 'blue', marginTop: 50, marginLeft: 10 }}>Chưa có tài khoản ?</Text>
                     <Button
@@ -121,4 +226,10 @@ const mapDispatchToProps = (dispatch) => ({
     }
 });
 
-export default connect(null, mapDispatchToProps)(SignIn);
+const mapStateToProps = (state) => ({
+    user: state.userReducer.dataUser,
+    isLoading: state.userReducer.loading,
+    error: state.userReducer.error
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

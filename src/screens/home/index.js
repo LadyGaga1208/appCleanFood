@@ -1,17 +1,21 @@
-import React, { PureComponent } from "react";
-import { Text, View, ScrollView } from "react-native";
-import { Header, Button, Card } from "react-native-elements";
-import Icon from "react-native-vector-icons/FontAwesome";
-import ItemNewProduct from "./ItemNewProduct";
-import BannerSlide from "./BannerSlide";
-import ItemCatalogues from "./ItemCatalogues";
-import * as variables from "../../config/variables";
-import { ItemProduct } from "../../components";
+import React, { PureComponent } from 'react';
+import { Text, View, ScrollView } from 'react-native';
+import { Header, Button, Card } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import ItemNewProduct from './ItemNewProduct';
+import BannerSlide from './BannerSlide';
+import ItemCatalogues from './ItemCatalogues';
+import * as variables from '../../config/variables';
+import { ItemProduct } from '../../components';
 
 export default class Home extends PureComponent {
   static navigationOptions = {
     header: null
   };
+  navigationSearch = () => {
+    console.log('object');
+    this.props.navigation.navigate('Search');
+  }
   renderCenterComponent = () => (
     <Button
       onPress={this.navigationSearch}
@@ -19,10 +23,10 @@ export default class Home extends PureComponent {
       buttonStyle={{
         width: 0.9 * variables.width,
         backgroundColor: variables.COLOR.white,
-        justifyContent: "flex-start"
+        justifyContent: 'flex-start'
       }}
       titleStyle={{
-        color: "gray"
+        color: 'gray'
       }}
       icon={
         <Icon
@@ -55,7 +59,7 @@ export default class Home extends PureComponent {
               flex: 1
             }}
           >
-            <View style={{ flexDirection: "row", marginTop: 10 }}>
+            <View style={{ flexDirection: 'row', marginTop: 10 }}>
               <View
                 style={{
                   width: 5,
@@ -66,7 +70,7 @@ export default class Home extends PureComponent {
               <Text style={{ marginLeft: 5 }}>Sản phẩm mới</Text>
             </View>
             <ItemNewProduct />
-            <View style={{ flexDirection: "row", marginTop: 10 }}>
+            <View style={{ flexDirection: 'row', marginTop: 10 }}>
               <View
                 style={{
                   width: 5,
@@ -77,13 +81,13 @@ export default class Home extends PureComponent {
               <Text style={{ marginLeft: 5 }}>Danh mục</Text>
             </View>
             <View
-              style={{ flexDirection: "row", justifyContent: "space-around" }}
+              style={{ flexDirection: 'row', justifyContent: 'space-around' }}
             >
               <ItemCatalogues />
               <ItemCatalogues />
               <ItemCatalogues />
             </View>
-            <View style={{ flexDirection: "row", marginTop: 10 }}>
+            <View style={{ flexDirection: 'row', marginTop: 10 }}>
               <View
                 style={{
                   width: 5,
@@ -95,8 +99,8 @@ export default class Home extends PureComponent {
             </View>
             <ItemProduct
               onPress={() => {
-                console.log("hahaha");
-                this.props.navigation.navigate("ProductDetail");
+                console.log('hahaha');
+                this.props.navigation.navigate('ProductDetail');
               }}
             />
             <View style={{ height: 50 }} />
@@ -105,8 +109,5 @@ export default class Home extends PureComponent {
       </View>
     );
   }
-  navigationSearch = () => {
-    console.log("object")
-    this.props.navigation.navigate("Search");
-  }
+
 }

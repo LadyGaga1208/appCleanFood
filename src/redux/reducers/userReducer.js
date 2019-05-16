@@ -1,8 +1,9 @@
-import { SIGNIN_REQUEST, SIGNIN_SUCCESS, SIGNIN_FAIL } from '../actions/types'
+import { SIGNIN_SUCCESS, SIGNIN_FAIL } from '../actions/types';
 
 const initState = {
   loading: true,
-  dataUser: []
+  dataUser: [],
+  error: ''
 };
 
 export default (state = initState, action) => {
@@ -10,7 +11,7 @@ export default (state = initState, action) => {
     case SIGNIN_SUCCESS:
       return { ...state, loading: false, dataUser: action.payload };
     case SIGNIN_FAIL:
-      return { ...state, loading: false };
+      return { ...state, loading: false, error: action.error };
     default:
       return { ...state };
   }

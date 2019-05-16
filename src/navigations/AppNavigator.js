@@ -19,7 +19,8 @@ import Carts from '../screens/cart';
 import Profile from '../screens/profile';
 import ProductDetail from '../screens/product';
 import Search from '../screens/search';
-import StoreDetail from '../screens/storeDetail'
+import StoreDetail from '../screens/storeDetail';
+import SplashScreen from '../screens/splash/SplashScreen';
 
 function initStackNavigator(initialRouteName) {
   return createStackNavigator(
@@ -85,8 +86,9 @@ const AuthStack = createStackNavigator(
 );
 
 const AppNavigator = createSwitchNavigator({
-  // App: AppTab,
-  Auth: AuthStack
+  SplashScreen,
+  Auth: AuthStack,
+  App: AppTab,
 });
 
 export default createAppContainer(AppNavigator);
