@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, ImageBackground, StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
+import { getNewProduct } from '../../redux/actions/home';
 
 import * as variables from '../../config/variables';
 
-export default class ItemCatalogues extends Component {
+class ItemCatalogues extends Component {
+    componentDidMount() {
+        this.props.getNewProduct();
+    }
     render() {
         return (
             <TouchableOpacity style={{ flexDirection: 'row', elevation: 5 }}>
@@ -37,4 +42,18 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginBottom: 10
     }
-})
+});
+
+const mapStateToProps = (state) => ({
+    data: state.newProductReducer.data,
+    isLoading: state.newProductReducer.loading,
+    error: state.newProductReducer.error
+});
+
+const mapDispathToProps = (dispath) => ({
+    getNewProduct: () => {
+        dispath(getNewProduct());
+    }
+});
+
+export default connect(mapStateToProps, mapDispathToProps)(ItemCatalogues);

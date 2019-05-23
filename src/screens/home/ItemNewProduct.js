@@ -1,12 +1,19 @@
 import React, { PureComponent } from 'react';
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
 import { Card, Image } from 'react-native-elements';
+import { connect } from 'react-redux';
+import { getNewProduct } from '../../redux/actions/home';
+import { Loaimport { FlatList } from 'react-native-gesture-handler';
+ding } from '../../components';
 
 import * as variables from '../../config/variables';
 
-export default class ItemNewProduct extends PureComponent {
-    render() {
-        return (
+class ItemNewProduct extends PureComponent {
+    componentDidMount() {
+        this.props.getNewProduct();
+    }
+
+    renderItem = ({ item }) => (
             <View>
                 <TouchableOpacity
                     style={styles.container}
@@ -25,6 +32,24 @@ export default class ItemNewProduct extends PureComponent {
                         <Text style={{ fontSize: 12, fontWeight: '500', color: variables.COLOR.black }}>20.000đ/kg</Text>
                     </View>
                 </TouchableOpacity>
+            </View>
+        )
+    render() {
+        if (this.props.isLoading) {
+            return (
+                <View >
+                    <Loading />
+                </View>
+            );
+        }
+        return (
+            <View>
+              <FlatList 
+                 data={this.props.data}
+                 extraData={this.state}
+                 keyExtractor={this._keyExtractor}
+                 renderItem={this.renderItem}
+              />
             </View>
         );
     }
@@ -50,4 +75,18 @@ const styles = StyleSheet.create({
         height: 90,
         resizeMode: 'stretch',
     }
-})
+});
+
+const mapStateToProps = (state) => ({
+    data: state.newProductReducer.data,
+    isLoading: state.newProductReducer.loading,
+    error: state.newProductReducer.error
+});
+
+const mapDispathToProps = (dispath) => ({
+    getNewProduct: () => {
+        dispath(getNewProduct());
+    }
+});
+
+export default connect(mapStateToProps, mapDispathToProps)(ItemNewProduct);

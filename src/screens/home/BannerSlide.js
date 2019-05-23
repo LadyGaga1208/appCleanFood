@@ -8,16 +8,28 @@ import { Loading } from '../../components';
 const BannerWidth = Dimensions.get('window').width;
 const BannerHeight = 160;
 
-const images = [
-    'http://file.hstatic.net/1000144808/file/l_ch_nh_p_h_ng_t__i_2018_grande.png',
-    'http://hstatic.net/808/1000144808/1000194018/slideshow_image_3.jpg?v=1487',
-    'http://hstatic.net/808/1000144808/1000194018/slideshow_image_5.jpg?v=1487',
-    'http://hstatic.net/808/1000144808/1000194018/slideshow_image_4.jpg?v=1487'
-];
-
 class BannerSlide extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            images: []
+        };
+    }
+
     componentDidMount = () => {
         this.props.getDataBanner();
+    }
+
+    componentWillReceiveProps(nextprops) {
+        if (nextprops.data.length) {
+            const arrayImage = [];
+            nextprops.data.map((element) => {
+                arrayImage.push(element.img);
+                this.setState({
+                    images: [...arrayImage]
+                });
+            });
+        }
     }
 
     renderPage(image, index) {
@@ -27,9 +39,14 @@ class BannerSlide extends Component {
             </View>
         );
     }
-
     render() {
-        console.log(this.props.data);
+        if (this.props.isLoading) {
+            return (
+                <View style={[styles.container, { width: BannerWidth, height: BannerHeight }]}>
+                    <Loading />
+                </View>
+            );
+        }
         return (
             <View style={styles.container}>
                 <Carousel
@@ -39,7 +56,7 @@ class BannerSlide extends Component {
                     index={0}
                     pageSize={BannerWidth}
                 >
-                    {images.map((image, index) => this.renderPage(image, index))}
+                    {this.state.images.map((image, index) => this.renderPage(image, index))}
                 </Carousel>
             </View>
         );
@@ -54,7 +71,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => ({
-    data: state.bannerReducer.dataHome,
+    data: state.bannerReducer.data,
     isLoading: state.bannerReducer.loading,
     error: state.bannerReducer.error
 });

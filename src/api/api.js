@@ -12,5 +12,5 @@ export const TIMEOUT = 30000;
  * get location
  */
 export const sigIn = '/user/login';
-export const banner = 'api/home/banner';
+export const banner = '/home/banner';
 

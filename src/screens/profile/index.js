@@ -7,13 +7,23 @@ import {
   StyleSheet,
   SafeAreaView,
   Platform,
-  StatusBar
+  StatusBar,
+  AsyncStorage
 } from 'react-native';
-
+import { Button } from 'react-native-elements';
 import * as variables from '../../config/variables';
 import * as images from '../../assets/images';
 
 export default class Profile extends Component {
+  logout = async () => {
+    try {
+      const value = await AsyncStorage.removeItem('userToken');
+      console.log(value);
+      this.props.navigation.navigate('Auth');
+    } catch (error) {
+      console.log(error);
+    }
+  }
   render() {
     return (
       <SafeAreaView style={styles.droidSafeArea}>
@@ -109,6 +119,11 @@ export default class Profile extends Component {
             </View>
             <Image source={images.arrow} style={{ width: 18, height: 18 }} />
           </TouchableOpacity>
+          <Button
+            title="Đăng xuất"
+            onPress={this.logout}
+          />
+
         </View>
       </SafeAreaView>
     );

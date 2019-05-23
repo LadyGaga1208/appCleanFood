@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Dimensions, Image, Text, TouchableOpacity } from 'react-native';
 import Carousel from 'react-native-banner-carousel';
 import AsyncStorage from '@react-native-community/async-storage';
+import { connect } from 'react-redux';
 
 import * as variables from '../../config/variables';
+import { getToken, getTokenSuccess, getTokenFailed } from '../../redux/actions/user';
 
 const BannerWidth = Dimensions.get('window').width;
 const BannerHeight = Dimensions.get('window').height;
@@ -15,20 +17,27 @@ const images = [
     'http://www.hadicofoods.com/images/images/10606319_145076869217259_9105091318001141506_n.jpg'
 ];
 
-export default class SplashScreen extends Component {
+class SplashScreen extends Component {
 
     componentDidMount = async () => {
         this.getTokenUser();
     }
 
     getTokenUser = async () => {
+        this.props.getToken();
         try {
             const value = await AsyncStorage.getItem('userToken');
             if (value !== null) {
                 console.log(value);
+                this.props.getTokenSuccess(JSON.parse(value));
                 this.props.navigation.navigate('App');
             }
+            if (value === null) {
+                this.goToAuth();
+                this.props.getTokenFailed('');
+            }
         } catch (error) {
+            this.props.getTokenFailed(error);
             this.goToAuth();
         }
     }
@@ -85,3 +94,17 @@ const styles = StyleSheet.create({
         marginLeft: 0.3 * BannerWidth
     }
 });
+
+const mapDispatchToProps = (dispatch) => ({
+    getToken: () => {
+        dispatch(getToken());
+    },
+    getTokenSuccess: (data) => {
+        dispatch(getTokenSuccess(data));
+    },
+    getTokenFailed: (error) => {
+        dispatch(getTokenFailed(error));
+    }
+});
+
+export default connect(null, mapDispatchToProps)(SplashScreen);

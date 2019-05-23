@@ -1,17 +1,29 @@
-import { put, takeLatest } from 'redux-saga/effects';
+import { put, takeLatest, select } from 'redux-saga/effects';
 import * as Consts from '../actions/types';
-
 import client from '../../api';
-import * as Api from '../../api/api';
 
 function* getBanner() {
     try {
-        const response = yield client.post(Api.banner);
-        if (response.data.success === true) {
-            yield put({
-                type: Consts.GET_BANNER_SUCCESS,
-                payload: response.data.user,
+        const state = yield select();
+        console.log(state.userReducer.dataUser, 'state cua ung dung');
+        if (state.userReducer.dataUser) {
+            const token = state.userReducer.dataUser.validate_token;
+            console.log(token);
+            const response = yield client({
+                url: '/home/banner',
+                method: 'get',
+                headers: {
+                    validateToken: `${token}`,
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
             });
+            console.log(response.data.banner);
+            if (response.data.success === true) {
+                yield put({
+                    type: Consts.GET_BANNER_SUCCESS,
+                    payload: response.data.banner,
+                });
+            }
         }
     } catch (error) {
         if (error.response) {
@@ -36,6 +48,53 @@ function* getBanner() {
     }
 }
 
-export function* getDataBanner() {
+function* getNewProduct() {
+    try {
+        const state = yield select();
+        if (state.userReducer.dataUser) {
+            const token = state.userReducer.dataUser.validate_token;
+            const response = yield client({
+                url: 'home/newproduct',
+                method: 'get',
+                headers: {
+                    validateToken: `${token}`,
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+            });
+            if (response.data.success === true) {
+                yield put({
+                    type: Consts.GET_NEW_PRODUCT_SUCCESS,
+                    payload: response.data.newProduct,
+                });
+            }
+        }
+    } catch (error) {
+        if (error.response) {
+            console.log(error.response.data.msg);
+            yield put({
+                type: Consts.GET_NEW_PRODUCT_FAILED,
+                error: error.response.data.msg
+            });
+        } else if (error.request) {
+            console.log(error.request);
+            yield put({
+                type: Consts.GET_NEW_PRODUCT_FAILED,
+                error: error.request
+            });
+        } else {
+            console.log('Error', error.message);
+            yield put({
+                type: Consts.GET_NEW_PRODUCT_FAILED,
+                error: error.message
+            });
+        }
+    }
+}
+
+export function* watchGetBanner() {
     yield takeLatest(Consts.GET_BANNER, getBanner);
+}
+
+export function* watchGetNewProduct() {
+    yield takeLatest(Consts.GET_NEW_PRODUCT, getNewProduct);
 }

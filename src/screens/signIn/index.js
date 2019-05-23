@@ -3,7 +3,7 @@ import { Text, View, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { Header, Input, Button } from 'react-native-elements';
 import { connect } from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
-import { GraphRequest, GraphRequestManager, AccessToken, LoginManager } from 'react-native-fbsdk';
+import { AccessToken, LoginManager } from 'react-native-fbsdk';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { userLogin } from '../../redux/actions/user';
@@ -21,8 +21,7 @@ class SignIn extends Component {
 
     componentWillReceiveProps = async (nextprops) => {
         if (nextprops.user.validate_token) {
-            console.log('token', nextprops.user.validate_token);
-            this.signInAsync(nextprops.user.validate_token);
+            this.signInAsync(nextprops.user);
         }
         if (nextprops.error !== this.props.error) {
             const e = this.getErrorLogin(nextprops.error);
@@ -72,6 +71,7 @@ class SignIn extends Component {
                             //         response.error = error;
                             //         console.log(response);
                             //         return (response);
+
                             //     }
                             //     response.ok = true;
                             //     response.json = result;
@@ -113,9 +113,14 @@ class SignIn extends Component {
             });
     }
 
-    signInAsync = async (token) => {
-        await AsyncStorage.setItem('userToken', token);
-        this.props.navigation.navigate('App');
+    signInAsync = async (data) => {
+        console.log('hehe');
+        try {
+            await AsyncStorage.setItem('userToken', JSON.stringify(data));
+            this.props.navigation.navigate('App');
+        } catch (error) {
+            console.log(error, 'loi khi luu token');
+        }
     };
     render() {
         return (

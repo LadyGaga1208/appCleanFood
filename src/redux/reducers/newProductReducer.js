@@ -1,4 +1,4 @@
-import { GET_BANNER_FAILED, GET_BANNER_SUCCESS, GET_BANNER } from '../actions/types';
+import { GET_NEW_PRODUCT, GET_NEW_PRODUCT_FAILED, GET_NEW_PRODUCT_SUCCESS } from '../actions/types';
 
 const initState = {
     loading: false,
@@ -8,11 +8,11 @@ const initState = {
 
 export default (state = initState, action) => {
     switch (action.type) {
-        case GET_BANNER:
+        case GET_NEW_PRODUCT:
             return { ...state, loading: true };
-        case GET_BANNER_SUCCESS:
+        case GET_NEW_PRODUCT_SUCCESS:
             return { ...state, loading: false, data: action.payload };
-        case GET_BANNER_FAILED:
+        case GET_NEW_PRODUCT_FAILED:
             return { ...state, loading: true, error: action.error };
         default:
             return { ...state };
