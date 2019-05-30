@@ -9,8 +9,8 @@ import * as images from '../../assets/images';
 const screen = Dimensions.get('window');
 
 const ASPECT_RATIO = screen.width / screen.height;
-const LATITUDE = 37.78825;
-const LONGITUDE = -122.4324;
+const LATITUDE = 20.990437;
+const LONGITUDE = 105.8466438;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
@@ -26,30 +26,27 @@ export default class Catalogues extends Component {
       latitude: LATITUDE,
       longitude: LONGITUDE,
     };
+    this.mapRef = null;
+
   }
 
 
   componentDidMount = async () => {
-    // this.getCurrentLocation();
-    // eslint-disable-next-line no-undef
-    // navigator.geolocation.getCurrentPosition(
-    //   (position) => {
-    //     console.log('wokeeey');
-    //     console.log(position);
-    //     this.setState({
-    //       latitude: position.coords.latitude,
-    //       longitude: position.coords.longitude,
-    //     });
-    //   },
-    //   { enableHighAccuracy: true, timeout: 200000, maximumAge: 1000 },
-    // );
-    // this.getCurrentLocation();
+    this.getCurrentLocation();
+    this.mapRef.fitToSuppliedMarkers(
+      [{
+        latitude: 21.0381296,
+        longitude: 105.7992297
+      }, {
+        latitude: 21.0362489,
+        longitude: 105.7884666
+      }],
+    );
   }
 
   getCurrentLocation = async () => {
     if (Platform.OS === 'android') {
       try {
-        console.log(' ......................................');
         const granted = await PermissionsAndroid.request(
           PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
           {
@@ -62,10 +59,7 @@ export default class Catalogues extends Component {
             buttonPositive: 'OK',
           },
         );
-        console.log(granted, 'granted.............');
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          console.log('hehehehehehehe=======');
-          // eslint-disable-next-line no-undef
           navigator.geolocation.getCurrentPosition(
             (position, error) => {
               console.log(error);
@@ -74,28 +68,28 @@ export default class Catalogues extends Component {
                 latitude: position.coords.latitude,
                 longitude: position.coords.longitude,
               });
-            },
-            // { enableHighAccuracy: true, timeout: 200000, maximumAge: 3600000 },
+            }, { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 },
           );
         } else {
           console.log('Camera permission denied');
         }
       } catch (err) {
-        console.log('hahahaha//////////////////');
         console.warn(err);
       }
     }
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        console.log('wokeeey');
-        console.log(position);
-        this.setState({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        });
-      },
-      { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 },
-    );
+    if (Platform.OS === "ios") {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          console.log('wokeeey');
+          console.log(position);
+          this.setState({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+        },
+        { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 },
+      );
+    }
   }
 
   render() {
@@ -110,14 +104,33 @@ export default class Catalogues extends Component {
             latitudeDelta: LATITUDE_DELTA,
             longitudeDelta: LONGITUDE_DELTA,
           }}
+          ref={(ref) => { this.mapRef = ref }}
         >
-          {/* <Marker
+          <Marker
+            title="hehe"
+            description="quan bun dau ne"
             ref={marker => { this.marker = marker; }}
             coordinate={{
               latitude: this.state.latitude,
               longitude: this.state.longitude
             }}
-          /> */}
+          />
+          <Marker
+            ref={marker => { this.hehe = marker; }}
+            coordinate={{
+              latitude: 21.0381296,
+              longitude: 105.7992297
+            }}
+            pinColor="#42f450"
+          />
+          <Marker
+            ref={marker => { this.hihi = marker; }}
+
+            coordinate={{
+              latitude: 21.0362489,
+              longitude: 105.7884666
+            }}
+          />
         </MapView>
       </View>
     );

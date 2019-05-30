@@ -2,7 +2,7 @@
  * api domain constants
  */
 
-export const baseURL = 'http://hoangtung.site/api';
+export const baseURL = 'http://doang-quang-long.tk/api';
 export const TIMEOUT = 30000;
 
 /*

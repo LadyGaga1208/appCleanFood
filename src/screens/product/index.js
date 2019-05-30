@@ -31,15 +31,15 @@ export default class ProductDetail extends Component {
         <ScrollView style={{ flex: 1, padding: variables.Pad }}>
           <View style={{ flexDirection: 'row' }}>
             <Image
-              source={{ uri: 'https://i.pinimg.com/564x/a7/ca/5c/a7ca5c0c50f610582bfda19d21086018.jpg' }}
+              source={{ uri: 'http://www.vietgap.com/Uploads/image/thanh-hai/image/21_05_16%20rau%20sach.jpg' }}
               style={styles.imgProduct}
             />
             <View style={{ marginLeft: 10 }}>
-              <Text style={{ fontSize: variables.FONTSIZE.large, color: variables.COLOR.black, fontWeight: '500' }}>Maykyo hokk</Text>
+              <Text style={{ fontSize: variables.FONTSIZE.large, color: variables.COLOR.black, fontWeight: '500' }}>Rau sạch ngon</Text>
               <Text style={{ color: variables.mainColor, fontSize: variables.FONTSIZE.large, fontWeight: '500' }}>50.000d/kg</Text>
               <View style={{ flexDirection: 'row', marginTop: 5 }}>
                 <Image source={imgs.store} style={{ width: 20, height: 20 }} />
-                <Text style={{ fontSize: 14, color: variables.COLOR.orange, marginLeft: 5 }}>TOMITA Trần Duy Hưng</Text>
+                <Text style={{ fontSize: 14, color: variables.COLOR.orange, marginLeft: 5 }}>Bác Tôm Bách Khoa</Text>
               </View>
               <View style={{ flexDirection: 'row', marginTop: 5 }}>
                 <Rating

@@ -18,11 +18,11 @@ export default class Detail extends Component {
                 />
                 <View style={styles.wrapInfo}>
                     <Image source={imgs.store} style={{ width: 24, height: 24 }} />
-                    <Text style={{ fontSize: 16, color: variables.COLOR.orange, marginLeft: 10 }}>Bác Tôm Trần Duy Hưng</Text>
+                    <Text style={{ fontSize: 16, color: variables.COLOR.orange, marginLeft: 10 }}>Bác Tôm Tạ Quang Bửu</Text>
                 </View>
                 <View style={styles.wrapInfo}>
                     <Image source={imgs.place} style={{ width: 20, height: 20, tintColor: variables.COLOR.fb }} />
-                    <Text style={{ fontSize: 14, color: variables.COLOR.black, marginLeft: 5 }}>12 Trần Duy Hưng, Trung Hòa, Cầu Giay, Hà Nội</Text>
+                    <Text style={{ fontSize: 14, color: variables.COLOR.black, marginLeft: 5 }}>12 Tạ Quang Bửu, Hai Bà Trưng, Hà Nội</Text>
                 </View>
                 <View style={styles.wrapInfo}>
                     <Image source={imgs.phone} style={{ width: 20, height: 20, tintColor: variables.COLOR.fb }} />

@@ -17,7 +17,7 @@ function* userLogin(action) {
     if (error.response) {
       // The request was made and the server responded with a status code
       // that falls out of the range of 2xx
-      console.log(error.response.data.msg);
+      console.log(error.response, "hehehe");
       yield put({
         type: SIGNIN_FAIL,
         error: error.response.data.msg
@@ -26,14 +26,14 @@ function* userLogin(action) {
       // The request was made but no response was received
       // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
       // http.ClientRequest in node.js
-      console.log(error.request);
+      console.log(error.request, "hihihi");
       yield put({
         type: SIGNIN_FAIL,
         error: error.request
       });
     } else {
       // Something happened in setting up the request that triggered an Error
-      console.log('Error', error.message);
+      console.log('Error', error.message, "hohoho");
       yield put({
         type: SIGNIN_FAIL,
         error: error.message

@@ -21,6 +21,7 @@ import ProductDetail from '../screens/product';
 import Search from '../screens/search';
 import StoreDetail from '../screens/storeDetail';
 import SplashScreen from '../screens/splash/SplashScreen';
+import Address from '../screens/orders/Address'
 
 function initStackNavigator(initialRouteName) {
   return createStackNavigator(
@@ -40,13 +41,14 @@ const StackHome = createStackNavigator({
 
 const StackCart = createStackNavigator({
   Carts,
-  ProductDetail
+  ProductDetail,
+Address,
 });
 
 const AppTab = createBottomTabNavigator(
   {
     Home: StackHome,
-    Catalogues,
+    Stores: Catalogues,
     Carts: { screen: StackCart },
     Profile: { screen: Profile }
   },
@@ -57,7 +59,7 @@ const AppTab = createBottomTabNavigator(
         let iconName;
         if (routeName === 'Home') {
           iconName = 'home';
-        } else if (routeName === 'Catalogues') {
+        } else if (routeName === 'Stores') {
           iconName = 'bars';
         } else if (routeName === 'Carts') {
           iconName = 'shopping-cart';

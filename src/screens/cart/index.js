@@ -23,11 +23,12 @@ export default class Carts extends Component {
                     </View>
                     <View style={{ width: '100%', height: 60, backgroundColor: variables.COLOR.white, position: 'absolute', bottom: 0, flexDirection: 'row' }}>
                         <View style={{ width: '60%', justifyContent: 'center', alignItems: 'center' }}>
-                            <Text style={{ color: '#444', fontSize: 18 }}>Tổng: 1.223.000d</Text>
+                            <Text style={{ color: '#444', fontSize: 18 }}>Tổng: 120.000đ</Text>
                         </View>
                         <View style={{ width: '40%', justifyContent: 'center', alignItems: 'center' }}>
                             <Button
-                                title="Thanh toán"
+                                title ="Thanh toán"
+                                onPress={() => this.props.navigation.navigate("Address")}
                             />
                         </View>
                     </View>
