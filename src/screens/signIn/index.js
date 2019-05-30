@@ -60,31 +60,6 @@ class SignIn extends Component {
                             console.log(data, 'dfgsaoghsadhfgsao');
                             console.log(data.accessToken.toString(), data.userID);
                             this.initUser(data.accessToken.toString());
-                            // const responseCallback = ((error, result) => {
-                            //     const response = {
-                            //         ok: false,
-                            //         error: '',
-                            //         json: ''
-                            //     };
-                            //     if (error) {
-                            //         response.ok = false;
-                            //         response.error = error;
-                            //         console.log(response);
-                            //         return (response);
-
-                            //     }
-                            //     response.ok = true;
-                            //     response.json = result;
-                            //     console.log(response);
-                            //     return (response);
-                            // });
-                            // const infoRequest = new GraphRequest(
-                            //     '/me?fields=name,picture,email',
-                            //     null,
-                            //     responseCallback
-                            // );
-                            // // Start the graph request.
-                            // new GraphRequestManager().addRequest(infoRequest).start();
                         }
                     );
                 }
@@ -98,15 +73,6 @@ class SignIn extends Component {
             .then((response) => response.json())
             .then((json) => {
                 console.log(json);
-                // Some user object has been set up somewhere, build that user here
-                // user.name = json.name;
-                // user.id = json.id;
-                // user.user_friends = json.friends;
-                // user.email = json.email;
-                // user.username = json.name;
-                // user.loading = false;
-                // user.loggedIn = true;
-                // user.avatar = setAvatar(json.id);
             })
             .catch(() => {
                 reject('ERROR GETTING DATA FROM FACEBOOK');

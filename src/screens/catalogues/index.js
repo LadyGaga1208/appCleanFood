@@ -114,6 +114,7 @@ export default class Catalogues extends Component {
               latitude: this.state.latitude,
               longitude: this.state.longitude
             }}
+            onCalloutPress={() => console.log("haha ban vua bam vao ne")}
           />
           <Marker
             ref={marker => { this.hehe = marker; }}

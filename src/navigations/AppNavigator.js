@@ -22,6 +22,8 @@ import Search from '../screens/search';
 import StoreDetail from '../screens/storeDetail';
 import SplashScreen from '../screens/splash/SplashScreen';
 import Address from '../screens/orders/Address'
+import ConfirmOrder from '../screens/orders/ConfirmOrder'
+import InforOrder from '../screens/orders/InforOrder'
 
 function initStackNavigator(initialRouteName) {
   return createStackNavigator(
@@ -42,7 +44,7 @@ const StackHome = createStackNavigator({
 const StackCart = createStackNavigator({
   Carts,
   ProductDetail,
-Address,
+  Address,
 });
 
 const AppTab = createBottomTabNavigator(

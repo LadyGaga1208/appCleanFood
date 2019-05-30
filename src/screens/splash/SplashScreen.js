@@ -20,7 +20,9 @@ const images = [
 class SplashScreen extends Component {
 
     componentDidMount = async () => {
-        this.getTokenUser();
+        setTimeout(() => {
+            this.getTokenUser();
+        }, 10000)
     }
 
     getTokenUser = async () => {

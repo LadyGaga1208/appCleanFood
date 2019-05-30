@@ -5,10 +5,13 @@ export const USER_KEY = 'USER_KEY';
 /**
  * Users
  */
+export const SIGNUP_REQUEST = 'SIGNUP_REQUEST';
+export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
+export const SIGNUP_FAIL = "SIGNUP_FAIL";
+
 export const SIGNIN_SUCCESS = 'SIGNIN_SUCCESS';
 export const SIGNIN_REQUEST = 'SIGNIN_REQUEST';
 export const SIGNIN_FAIL = 'SIGNIN_FAIL';
-export const SAVE_AUTHEN = 'SAVE_AUTHEN';
 
 export const GET_TOKEN = 'GET_TOKEN';
 export const GET_TOKEN_SUCCESS = 'GET_TOKEN_SUCCESS';

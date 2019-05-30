@@ -14,3 +14,4 @@ export const phone = require("./call.png");
 export const email = require("./email.png");
 export const face = require("./face.png");
 export const time = require("./clock.png")
+export const checked = require("./checked.png")

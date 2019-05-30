@@ -1,11 +1,22 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import { Header, Input, Button } from 'react-native-elements';
+import { userSignUp } from '../../redux/actions/user';
+import { connect } from 'react-redux';
+
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as variables from '../../config/variables';
 
+class SignUp extends Component {
 
-export default class SignUp extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: "",
+            email: "",
+            password: ""
+        }
+    }
     render() {
         return (
             <View style={{ flex: 1 }}>
@@ -24,8 +35,27 @@ export default class SignUp extends Component {
                         containerStyle={{
                             marginTop: 50
                         }}
+                        label="Tên đăng nhập"
+                        placeholder="Tên"
+                        value={this.state.name}
+                        onChangeText={(text) => {
+                            this.setState({
+                                name: text
+                            })
+                        }}
+                    />
+                    <Input
                         label="Email"
                         placeholder="Email"
+                        containerStyle={{
+                            marginTop: 10
+                        }}
+                        value={this.state.email}
+                        onChangeText={(text) => {
+                            this.setState({
+                                email: text
+                            })
+                        }}
                     />
                     <Input
                         secureTextEntry
@@ -34,13 +64,11 @@ export default class SignUp extends Component {
                         containerStyle={{
                             marginTop: 10
                         }}
-                    />
-                    <Input
-                        secureTextEntry
-                        label="Nhập lại mật khẩu"
-                        placeholder="Mật khẩu"
-                        containerStyle={{
-                            marginTop: 10
+                        value={this.state.password}
+                        onChangeText={(text) => {
+                            this.setState({
+                                password: text
+                            })
                         }}
                     />
                     <Button
@@ -50,9 +78,29 @@ export default class SignUp extends Component {
                             marginTop: 40,
                             marginHorizontal: 10
                         }}
+                        onPress={() => this.props.userSignUp({
+                            name: this.state.name,
+                            email: this.state.email,
+                            type: "001",
+                            password: this.state.password
+                        })}
                     />
                 </View>
             </View>
         );
     }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+    userSignUp: (data) => {
+        dispatch(userSignUp(data));
+    }
+});
+
+const mapStateToProps = (state) => ({
+    user: state.userReducer.dataUser,
+    isLoading: state.userReducer.loading,
+    error: state.userReducer.error
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
