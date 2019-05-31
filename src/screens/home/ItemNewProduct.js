@@ -1,39 +1,48 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
-import { Card, Image } from 'react-native-elements';
+import { Image } from 'react-native-elements';
 import { connect } from 'react-redux';
+import { withNavigation } from 'react-navigation';
+
 import { getNewProduct } from '../../redux/actions/home';
-import { Loading } from '../../components'
+import { Loading } from '../../components';
 
 import * as variables from '../../config/variables';
 
-class ItemNewProduct extends PureComponent {
+class ItemNewProduct extends Component {
+
     componentDidMount() {
         this.props.getNewProduct();
+    }
+
+    goToProductDetail = () => {
+        this.props.navigation.navigate('ProductDetail');
     }
 
     renderItem = ({ item }) => (
         <View>
             <TouchableOpacity
                 style={styles.container}
+                onPress={this.goToProductDetail}
             >
                 <View
                     style={styles.wrapImgProduct}
                 >
                     <Image
-                        source={{ uri: 'http://hstatic.net/808/1000144808/1000194018/slideshow_image_5.jpg?v=1487' }}
+                        source={{ uri: item.img }}
                         style={styles.imgProduct}
                     />
                 </View>
                 <View style={{ paddingHorizontal: 5, marginTop: 5 }}>
-                    <Text style={{ color: variables.COLOR.black }}>Cam Mỹ</Text>
-                    <Text style={{ fontSize: 12, color: variables.COLOR.orange }}>Tomita Cầu Giấy</Text>
-                    <Text style={{ fontSize: 12, fontWeight: '500', color: variables.COLOR.black }}>20.000đ/kg</Text>
+                    <Text style={{ color: variables.COLOR.black }}>{item.name}</Text>
+                    <Text style={{ fontSize: 12, color: variables.COLOR.orange }}>{item.storeName}</Text>
+                    <Text style={{ fontSize: 12, fontWeight: '500', color: variables.COLOR.black }}>{item.price}/{item.unit}</Text>
                 </View>
             </TouchableOpacity>
         </View>
     )
     render() {
+        console.log(this.props.navigation, 'this.props.navigation ........');
         if (this.props.isLoading) {
             return (
                 <View >
@@ -42,11 +51,11 @@ class ItemNewProduct extends PureComponent {
             );
         }
         return (
-            <View>
+            <View style={{ marginTop: 10 }}>
                 <FlatList
                     data={this.props.data}
                     extraData={this.state}
-                    keyExtractor={this._keyExtractor}
+                    keyExtractor={(item) => item.productId}
                     renderItem={this.renderItem}
                 />
             </View>

@@ -21,9 +21,9 @@ import ProductDetail from '../screens/product';
 import Search from '../screens/search';
 import StoreDetail from '../screens/storeDetail';
 import SplashScreen from '../screens/splash/SplashScreen';
-import Address from '../screens/orders/Address'
-import ConfirmOrder from '../screens/orders/ConfirmOrder'
-import InforOrder from '../screens/orders/InforOrder'
+import Address from '../screens/orders/Address';
+import ConfirmOrder from '../screens/orders/ConfirmOrder';
+import InforOrder from '../screens/orders/InforOrder';
 
 function initStackNavigator(initialRouteName) {
   return createStackNavigator(

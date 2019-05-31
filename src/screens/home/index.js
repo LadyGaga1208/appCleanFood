@@ -1,19 +1,18 @@
 import React, { PureComponent } from 'react';
 import { Text, View, ScrollView } from 'react-native';
-import { Header, Button, Card } from 'react-native-elements';
+import { Header, Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ItemNewProduct from './ItemNewProduct';
 import BannerSlide from './BannerSlide';
 import ItemCatalogues from './ItemCatalogues';
 import * as variables from '../../config/variables';
-import { ItemProduct } from '../../components';
+import ListSugguestProduct from './ListSugguestProduct';
 
 export default class Home extends PureComponent {
   static navigationOptions = {
     header: null
   };
   navigationSearch = () => {
-    console.log('object');
     this.props.navigation.navigate('Search');
   }
   renderCenterComponent = () => (
@@ -39,6 +38,7 @@ export default class Home extends PureComponent {
     />
   );
   render() {
+    console.log(this.props.navigation, 'hehehe hahaha');
     return (
       <View style={{ flex: 1, backgroundColor: variables.COLOR.white }}>
         <Header
@@ -81,11 +81,9 @@ export default class Home extends PureComponent {
               <Text style={{ marginLeft: 5 }}>Danh mục</Text>
             </View>
             <View
-              style={{ flexDirection: 'row', justifyContent: 'space-around' }}
+              style={{ }}
             >
-              <ItemCatalogues />
-              <ItemCatalogues />
-              <ItemCatalogues />
+              <ItemCatalogues navigation={this.props.navigation} />
             </View>
             <View style={{ flexDirection: 'row', marginTop: 10 }}>
               <View
@@ -97,12 +95,7 @@ export default class Home extends PureComponent {
               />
               <Text style={{ marginLeft: 5 }}>Có thể bạn muốn mua</Text>
             </View>
-            <ItemProduct
-              onPress={() => {
-                console.log('hahaha');
-                this.props.navigation.navigate('ProductDetail');
-              }}
-            />
+            <ListSugguestProduct navigation={this.props.navigation} haha="hehe" />
             <View style={{ height: 50 }} />
           </View>
         </ScrollView>

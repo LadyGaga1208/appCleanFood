@@ -6,7 +6,7 @@ import { getDataBanner } from '../../redux/actions/home';
 import { Loading } from '../../components';
 
 const BannerWidth = Dimensions.get('window').width;
-const BannerHeight = 160;
+const BannerHeight = 140;
 
 class BannerSlide extends Component {
     constructor(props) {

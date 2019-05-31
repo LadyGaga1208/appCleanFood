@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
-import { Text, View } from 'react-native'
+import React, { Component } from 'react';
+import { Text, View } from 'react-native';
 import { Header, Button, Input } from 'react-native-elements';
 
-import * as variables from '../../config/variables'
+import * as variables from '../../config/variables';
 
 export default class Address extends Component {
     render() {
@@ -14,7 +14,7 @@ export default class Address extends Component {
                         backgroundColor: variables.mainColor
                     }}
                 />
-                <View style={{ width: "100%", paddingHorizontal: 10, marginTop: 10 }}>
+                <View style={{ width: '100%', paddingHorizontal: 10, marginTop: 10 }}>
                     <Input
                         placeholder="Tên"
                         label="Tên người nhận"
@@ -30,12 +30,12 @@ export default class Address extends Component {
                     />
                 </View>
 
-                <View style={{ position: "absolute", bottom: 0, width: "100%" }}>
+                <View style={{ position: 'absolute', bottom: 0, width: '100%' }}>
                     <Button
                         title="Tiếp tục"
                     />
                 </View>
             </View>
-        )
+        );
     }
 }

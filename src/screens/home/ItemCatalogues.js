@@ -1,27 +1,59 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, ImageBackground, StyleSheet } from 'react-native';
+import { Text, View, TouchableOpacity, ImageBackground, StyleSheet, FlatList, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
-import { getNewProduct } from '../../redux/actions/home';
+import { getCatalogues } from '../../redux/actions/home';
+import { Loading } from '../../components';
 
 import * as variables from '../../config/variables';
 
+const screenWidth = Dimensions.get('window').width;
+
 class ItemCatalogues extends Component {
     componentDidMount() {
-        this.props.getNewProduct();
+        this.props.getCatalogues();
     }
-    render() {
-        return (
+
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps.data, 'hihi m biet tao khong');
+    }
+    
+    renderItem = ({ item }) => (
             <TouchableOpacity style={{ flexDirection: 'row', elevation: 5 }}>
                 <ImageBackground
-                    source={{ uri: 'https://image.dantocmiennui.vn/uploaddtmn//2017/6/19/17c7253a5639582e41ea8f9be4d6dd5b-1.jpg' }}
+                    source={{ uri: item.img }}
                     style={styles.backgroundImage}
                 >
-
                     <View style={styles.viewBackground}>
-                        <Text style={styles.text}>RAU CU QUA</Text>
+                        <Text style={styles.text}>{item.name}</Text>
                     </View>
                 </ImageBackground>
             </TouchableOpacity>
+        )
+
+    render() {
+        console.log(this.props.data, 'du lieu day nay');
+        if (this.props.isLoading) {
+            return (
+                <View >
+                    <Loading />
+                </View>
+            );
+        }
+        return (
+            <View style={{ marginTop: 10 }}>
+                <FlatList
+                    data={this.props.data}
+                    extraData={this.state}
+                    keyExtractor={this._keyExtractor}
+                    renderItem={this.renderItem}
+                    numColumns={3}
+                    columnWrapperStyle={{
+                        width: screenWidth,
+                        justifyContent: 'space-around',
+                    }}
+                    ItemSeparatorComponent={() => <View style={{ width: 10, height: 10 }} />}
+                />
+            </View>
         );
     }
 }
@@ -45,14 +77,14 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => ({
-    data: state.newProductReducer.data,
-    isLoading: state.newProductReducer.loading,
-    error: state.newProductReducer.error
+    data: state.cataloguesReducer.data,
+    isLoading: state.cataloguesReducer.loading,
+    error: state.cataloguesReducer.error
 });
 
 const mapDispathToProps = (dispath) => ({
-    getNewProduct: () => {
-        dispath(getNewProduct());
+    getCatalogues: () => {
+        dispath(getCatalogues());
     }
 });
 

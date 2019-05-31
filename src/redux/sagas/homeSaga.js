@@ -91,10 +91,104 @@ function* getNewProduct() {
     }
 }
 
+function* getCatalogues() {
+    try {
+        const state = yield select();
+        if (state.userReducer.dataUser) {
+            const token = state.userReducer.dataUser.validate_token;
+            const response = yield client({
+                url: '/home/catalogs',
+                method: 'get',
+                headers: {
+                    validateToken: `${token}`,
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+            });
+            if (response.data.success === true) {
+                yield put({
+                    type: Consts.GET_CATALOGUES_SUCCESS,
+                    payload: response.data.catalogs,
+                });
+            }
+        }
+    } catch (error) {
+        if (error.response) {
+            console.log(error.response.data.msg);
+            yield put({
+                type: Consts.GET_CATALOGUES_FAILED,
+                error: error.response.data.msg
+            });
+        } else if (error.request) {
+            console.log(error.request);
+            yield put({
+                type: Consts.GET_CATALOGUES_FAILED,
+                error: error.request
+            });
+        } else {
+            console.log('Error', error.message);
+            yield put({
+                type: Consts.GET_CATALOGUES_FAILED,
+                error: error.message
+            });
+        }
+    }
+}
+
+function* getSuggest() {
+    try {
+        const state = yield select();
+        if (state.userReducer.dataUser) {
+            const token = state.userReducer.dataUser.validate_token;
+            const response = yield client({
+                url: '/home/suggestionproduct',
+                method: 'get',
+                headers: {
+                    validateToken: `${token}`,
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+            });
+            if (response.data.success === true) {
+                yield put({
+                    type: Consts.GET_SUGGEST_SUCCESS,
+                    payload: response.data.newProduct,
+                });
+            }
+        }
+    } catch (error) {
+        if (error.response) {
+            console.log(error.response.data.msg);
+            yield put({
+                type: Consts.GET_SUGGEST_FAILED,
+                error: error.response.data.msg
+            });
+        } else if (error.request) {
+            console.log(error.request);
+            yield put({
+                type: Consts.GET_SUGGEST_FAILED,
+                error: error.request
+            });
+        } else {
+            console.log('Error', error.message);
+            yield put({
+                type: Consts.GET_SUGGEST_FAILED,
+                error: error.message
+            });
+        }
+    }
+}
+
 export function* watchGetBanner() {
     yield takeLatest(Consts.GET_BANNER, getBanner);
 }
 
 export function* watchGetNewProduct() {
     yield takeLatest(Consts.GET_NEW_PRODUCT, getNewProduct);
+}
+
+export function* watchGetCatalogues() {
+    yield takeLatest(Consts.GET_CATALOGUES, getCatalogues);
+}
+
+export function* watchGetSuggest() {
+    yield takeLatest(Consts.GET_SUGGEST, getSuggest);
 }
